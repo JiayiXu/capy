@@ -331,18 +331,16 @@ class CapybaraPet {
         const poopContainer = document.getElementById('poop-container');
         
         shovelImg.addEventListener('mousedown', (e) => {
-            if (this.stats.cleanliness < 50) {
-                this.isDragging = true;
-                this.draggingItem = 'shovel';
-                
-                const rect = shovelImg.getBoundingClientRect();
-                this.dragOffset.x = e.clientX - rect.left;
-                this.dragOffset.y = e.clientY - rect.top;
-                
-                shovelImg.style.position = 'fixed';
-                shovelImg.style.pointerEvents = 'none';
-                this.updateShovelPosition(e);
-            }
+            this.isDragging = true;
+            this.draggingItem = 'shovel';
+            
+            const rect = shovelImg.getBoundingClientRect();
+            this.dragOffset.x = e.clientX - rect.left;
+            this.dragOffset.y = e.clientY - rect.top;
+            
+            shovelImg.style.position = 'fixed';
+            shovelImg.style.pointerEvents = 'none';
+            this.updateShovelPosition(e);
         });
 
         document.addEventListener('mouseup', (e) => {
@@ -355,7 +353,7 @@ class CapybaraPet {
                 
                 const poopRect = poopContainer.getBoundingClientRect();
                 if (this.isOverlapping(e.clientX, e.clientY, poopRect)) {
-                    this.increaseStats('cleanliness', 60); // Bigger increase to get above 50
+                    this.increaseStats('cleanliness', 60);
                     this.updateDisplay();
                 }
             }
