@@ -33,6 +33,7 @@ class CapybaraPet {
         this.initPoopCheck();
         this.initShovelItem();
         this.initTouchEvents();
+        this.initModal();
     }
 
     init() {
@@ -461,6 +462,27 @@ class CapybaraPet {
         const element = document.getElementById(`${this.draggingItem}-img`);
         element.style.left = (x - this.dragOffset.x) + 'px';
         element.style.top = (y - this.dragOffset.y) + 'px';
+    }
+
+    initModal() {
+        const modal = document.getElementById('modal');
+        const aboutBtn = document.getElementById('about-btn');
+        const closeBtn = document.getElementById('modal-close');
+
+        aboutBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
     }
 }
 
