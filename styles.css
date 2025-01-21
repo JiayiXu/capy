@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f7f4;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.pet-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e8f3f1;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.capybara {
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+}
+
+.capybara img {
+    width: 100%;
+    height: auto;
+    max-height: 60vh;
+    object-fit: contain;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.status-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px;
+    background-color: #ffffff;
+}
+
+.status-button {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 25px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.status-button:hover {
+    transform: scale(1.02);
+    background-color: #f0f0f0;
+}
+
+.status-button i {
+    font-size: 24px;
+}
+
+#happiness i {
+    color: #ff6b6b;
+}
+
+#food i {
+    color: #ffd93d;
+}
+
+#water i {
+    color: #6c5ce7;
+}
+
+#cleanliness i {
+    color: #a8e6cf;
+}
+
+#energy i {
+    color: #ffd700;  /* Golden yellow color for energy */
+}
+
+.name-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#pet-name {
+    font-size: 24px;
+    padding: 8px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    text-align: center;
+    width: 80%;
+    max-width: 300px;
+    background-color: #f8f8f8;
+    color: #333;
+    font-weight: bold;
+}
+
+#pet-name:focus {
+    outline: none;
+    border-color: #6c5ce7;
+    box-shadow: 0 0 5px rgba(108, 92, 231, 0.3);
+} 
