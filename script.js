@@ -319,7 +319,7 @@ class CapybaraPet {
         const poopContainer = document.getElementById('poop-container');
         const shovelItem = document.querySelector('.shovel-item');
         
-        if (this.stats.cleanliness <= 95 ) {
+        if (this.stats.cleanliness <= 30 ) {
             poopContainer.style.display = 'block';
             shovelItem.style.display = 'block';
         } else {
