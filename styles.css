@@ -26,6 +26,7 @@ body {
     width: 100%;
     max-width: 500px;
     padding: 20px;
+    position: relative;
 }
 
 .capybara img {
@@ -33,8 +34,6 @@ body {
     height: auto;
     max-height: 60vh;
     object-fit: contain;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
 }
 
@@ -134,4 +133,65 @@ body {
 
 .food-item img:hover {
     transform: scale(1.1);
+}
+
+.water-item {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: grab;
+    z-index: 1000;
+}
+
+.water-item img {
+    width: 150px;
+    height: 150px;
+    transition: transform 0.2s ease;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.water-item img:hover {
+    transform: scale(1.1);
+}
+
+.water-item img:active {
+    cursor: grabbing;
+}
+
+.poop {
+    position: absolute;
+    right: 27%;
+    top: 78%;
+    transform: translateY(-50%);
+    z-index: 1000;
+}
+
+.poop img {
+    width: 120px;
+    height: 120px;
+}
+
+.shovel-item {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    cursor: grab;
+    z-index: 1000;
+}
+
+.shovel-item img {
+    width: 150px;
+    height: 150px;
+    transition: transform 0.2s ease;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.shovel-item img:hover {
+    transform: scale(1.1);
+}
+
+.shovel-item img:active {
+    cursor: grabbing;
 } 
