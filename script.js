@@ -23,6 +23,7 @@ class CapybaraPet {
         this.isDrinking = false;
         this.dragOffset = { x: 0, y: 0 };
         this.draggingItem = null; // Add this to track which item is being dragged
+        this.isTouchDevice = 'ontouchstart' in window;
         this.init();
         this.initNameInput();
         this.initImageHover();
@@ -31,6 +32,7 @@ class CapybaraPet {
         this.initMouseMoveHandler();
         this.initPoopCheck();
         this.initShovelItem();
+        this.initTouchEvents();
     }
 
     init() {
@@ -364,6 +366,101 @@ class CapybaraPet {
         const shovelImg = document.getElementById('shovel-img');
         shovelImg.style.left = (e.clientX - this.dragOffset.x) + 'px';
         shovelImg.style.top = (e.clientY - this.dragOffset.y) + 'px';
+    }
+
+    initTouchEvents() {
+        if (!this.isTouchDevice) return;
+
+        const addTouchHandler = (element, itemType) => {
+            element.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                this.isDragging = true;
+                this.draggingItem = itemType;
+
+                const touch = e.touches[0];
+                const rect = element.getBoundingClientRect();
+                this.dragOffset.x = touch.clientX - rect.left;
+                this.dragOffset.y = touch.clientY - rect.top;
+
+                element.style.position = 'fixed';
+                element.style.pointerEvents = 'none';
+                this.updateItemPosition(touch.clientX, touch.clientY);
+            });
+        };
+
+        // Add touch handlers to draggable items
+        addTouchHandler(document.getElementById('burger-img'), 'burger');
+        addTouchHandler(document.getElementById('water-img'), 'water');
+        addTouchHandler(document.getElementById('shovel-img'), 'shovel');
+
+        // Handle touch move
+        document.addEventListener('touchmove', (e) => {
+            if (this.isDragging) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                this.updateItemPosition(touch.clientX, touch.clientY);
+            }
+        }, { passive: false });
+
+        // Handle touch end
+        document.addEventListener('touchend', (e) => {
+            if (this.isDragging) {
+                const element = document.getElementById(`${this.draggingItem}-img`);
+                const capyImg = document.getElementById('capybara-img');
+                const poopContainer = document.getElementById('poop-container');
+                
+                element.style.position = 'static';
+                element.style.pointerEvents = 'auto';
+                element.style.transform = 'none';
+
+                // Get the last touch position
+                const lastTouch = e.changedTouches[0];
+                const capyRect = capyImg.getBoundingClientRect();
+                const poopRect = poopContainer.getBoundingClientRect();
+
+                if (this.draggingItem === 'shovel') {
+                    if (this.isOverlapping(lastTouch.clientX, lastTouch.clientY, poopRect)) {
+                        this.increaseStats('cleanliness', 60);
+                        this.updateDisplay();
+                    }
+                } else if (this.isOverlapping(lastTouch.clientX, lastTouch.clientY, capyRect)) {
+                    if (this.draggingItem === 'burger') {
+                        this.startEatingAnimation();
+                    } else if (this.draggingItem === 'water') {
+                        this.startDrinkingAnimation();
+                    }
+                }
+
+                this.isDragging = false;
+                this.draggingItem = null;
+            }
+        });
+
+        // Add touch handlers for capybara interactions
+        const capyImg = document.getElementById('capybara-img');
+        
+        capyImg.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.isPressed = true;
+            if (this.stats.energy > 30) {
+                capyImg.src = this.happyImage;
+                this.increaseStats('happiness', 10);
+                this.updateDisplay();
+            }
+        });
+
+        capyImg.addEventListener('touchend', () => {
+            this.isPressed = false;
+            this.updateCapybaraImage();
+        });
+    }
+
+    updateItemPosition(x, y) {
+        if (!this.isDragging) return;
+        
+        const element = document.getElementById(`${this.draggingItem}-img`);
+        element.style.left = (x - this.dragOffset.x) + 'px';
+        element.style.top = (y - this.dragOffset.y) + 'px';
     }
 }
 

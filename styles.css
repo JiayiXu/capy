@@ -194,4 +194,58 @@ body {
 
 .shovel-item img:active {
     cursor: grabbing;
+}
+
+/* Make container stack vertically on small screens */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .pet-section {
+        min-height: 60vh;
+    }
+
+    /* Adjust item sizes for mobile */
+    .food-item img,
+    .water-item img,
+    .shovel-item img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .poop img {
+        width: 60px;
+        height: 60px;
+    }
+
+    /* Adjust positions for mobile */
+    .food-item {
+        top: 10px;
+        right: 10px;
+    }
+
+    .water-item {
+        top: 10px;
+        left: 10px;
+    }
+
+    .shovel-item {
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .status-button {
+        padding: 10px 15px;
+    }
+
+    .status-button i {
+        font-size: 18px;
+    }
+
+    #pet-name {
+        font-size: 18px;
+        padding: 6px 12px;
+    }
 } 
