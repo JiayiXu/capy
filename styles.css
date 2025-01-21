@@ -18,6 +18,7 @@ body {
     background-color: #e8f3f1;
     padding: 20px;
     overflow: hidden;
+    position: relative;
 }
 
 .capybara {
@@ -109,4 +110,28 @@ body {
     outline: none;
     border-color: #6c5ce7;
     box-shadow: 0 0 5px rgba(108, 92, 231, 0.3);
+}
+
+.food-item {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: grab;
+    z-index: 1000;
+}
+
+.food-item img {
+    width: 150px;
+    height: 150px;
+    transition: transform 0.2s ease;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.food-item img:active {
+    cursor: grabbing;
+}
+
+.food-item img:hover {
+    transform: scale(1.1);
 } 
