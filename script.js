@@ -24,6 +24,8 @@ class CapybaraPet {
         this.dragOffset = { x: 0, y: 0 };
         this.draggingItem = null; // Add this to track which item is being dragged
         this.isTouchDevice = 'ontouchstart' in window;
+        this.coins = parseInt(localStorage.getItem('coins')) || 0;
+        this.updateCoinDisplay();
         this.init();
         this.initNameInput();
         this.initImageHover();
@@ -203,9 +205,8 @@ class CapybaraPet {
         const burgerImg = document.getElementById('burger-img');
         this.isEating = true;
         let count = 0;
-        const maxCount = 6; // 3 seconds / 500ms = 6 switches
+        const maxCount = 6;
         
-        // Hide burger during animation
         burgerImg.style.visibility = 'hidden';
         
         const eatInterval = setInterval(() => {
@@ -215,6 +216,7 @@ class CapybaraPet {
                 this.increaseStats('food', 10);
                 this.updateDisplay();
                 burgerImg.style.visibility = 'visible';
+                this.addCoins(2);  // Add 2 coins for eating
                 return;
             }
             
@@ -227,9 +229,8 @@ class CapybaraPet {
         const waterImg = document.getElementById('water-img');
         this.isDrinking = true;
         let count = 0;
-        const maxCount = 6; // 3 seconds / 500ms = 6 switches
+        const maxCount = 6;
         
-        // Hide water during animation
         waterImg.style.visibility = 'hidden';
         
         const drinkInterval = setInterval(() => {
@@ -239,6 +240,7 @@ class CapybaraPet {
                 this.increaseStats('water', 10);
                 this.updateDisplay();
                 waterImg.style.visibility = 'visible';
+                this.addCoins(2);  // Add 2 coins for drinking
                 return;
             }
             
@@ -358,6 +360,7 @@ class CapybaraPet {
                 if (this.isOverlapping(e.clientX, e.clientY, poopRect)) {
                     this.increaseStats('cleanliness', 60);
                     this.updateDisplay();
+                    this.addCoins(2);  // Changed from 5 to 2 coins for cleaning
                 }
             }
         });
@@ -423,6 +426,7 @@ class CapybaraPet {
                     if (this.isOverlapping(lastTouch.clientX, lastTouch.clientY, poopRect)) {
                         this.increaseStats('cleanliness', 60);
                         this.updateDisplay();
+                        this.addCoins(2);  // Changed from 5 to 2 coins for cleaning
                     }
                 } else if (this.isOverlapping(lastTouch.clientX, lastTouch.clientY, capyRect)) {
                     if (this.draggingItem === 'burger') {
@@ -483,6 +487,18 @@ class CapybaraPet {
                 modal.style.display = 'none';
             }
         });
+    }
+
+    updateCoinDisplay() {
+        const coinCount = document.getElementById('coin-count');
+        // Pad with zeros to ensure 3 digits
+        coinCount.textContent = String(this.coins).padStart(3, '0');
+    }
+
+    addCoins(amount) {
+        this.coins = Math.min(999, this.coins + amount);
+        localStorage.setItem('coins', this.coins);
+        this.updateCoinDisplay();
     }
 }
 
